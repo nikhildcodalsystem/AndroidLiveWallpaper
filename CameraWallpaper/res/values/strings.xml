@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Transparent Wallpaper</string>
+    <string name="setting_summary">transparent wallpaper</string>
+    <string name="wallpaper_install">Install Wallpaper</string>
+    <string name="recommend_app">Recommend Application</string>
+</resources>

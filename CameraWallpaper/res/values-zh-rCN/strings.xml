@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">透明壁纸</string>
+    <string name="setting_summary">透明壁纸</string>
+    <string name="wallpaper_install">安装壁纸</string>
+    <string name="recommend_app">推荐应用</string>
+</resources>
