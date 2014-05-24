@@ -48,7 +48,7 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 		if (R.id.Button02 == v.getId()) {
 			Intent intent = new Intent();
 			int sdkInt = Build.VERSION.SDK_INT;
-			if (sdkInt >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+			if (sdkInt > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
 				intent.setAction(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
 				ComponentName componentName = new ComponentName(MyWallpaperService.class.getPackage().getName()
 						, MyWallpaperService.class.getCanonicalName());
