@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:versionCode="9" android:versionName="2.4.1" package="com.zenip.camerawallpaper"
+<manifest android:versionCode="10" android:versionName="2.5.1" package="com.zenip.camerawallpaper"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    
+    
     
     <!-- Fix 金立手机4.2.1 SecurityException -->
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
@@ -28,6 +30,16 @@
             </intent-filter>
             <meta-data android:name="android.service.wallpaper" android:resource="@xml/wallpaper" />
         </service>
+        
+        <!-- startApp -->
+		<activity android:name="com.startapp.android.publish.list3d.List3DActivity"
+          android:taskAffinity="com.zenip.jinjidejurenreborn.AppWall"
+          android:theme="@android:style/Theme" />
+
+		<activity android:name="com.startapp.android.publish.AppWallActivity"
+          android:theme="@android:style/Theme.Translucent"
+          android:taskAffinity="com.zenip.jinjidejurenreborn.AppWall"            
+          android:configChanges="orientation|keyboardHidden" />
         
         <activity
             android:name="com.google.ads.AdActivity"

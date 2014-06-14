@@ -1,6 +1,8 @@
 package com.zenip.camerawallpaper;
 
 import com.google.ads.InterstitialAd;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
 import com.zenip.common.UmengBaseActivity;
 
 import android.annotation.SuppressLint;
@@ -22,10 +24,17 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 
 	private InterstitialAd intersitialAd;
 	
+	private StartAppAd startapp = new StartAppAd(this);
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		StartAppSDK.init(this, "106343400", "206781441");
+		StartAppAd.showSplash(this, null);
+		
 		setContentView(R.layout.settings);
+		
 		
 		findViewById(R.id.Button01).setOnClickListener(this);
 		findViewById(R.id.Button02).setOnClickListener(this);
@@ -34,15 +43,34 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 		
 		LinearLayout layout = (LinearLayout)findViewById(R.id.adlayout);
 		layout.addView(GoogleAdmob.createLayoutWithAd(this));
+		
+		startapp.loadAd();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	};
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		startapp.onPause();
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		startapp.onResume();
 	}
 	
+	@Override
+	public void onBackPressed() {
+		startapp.onBackPressed();
+	}
 	
-
 	@Override
 	public void onClick(View v) {
 		if (R.id.Button02 == v.getId()) {
