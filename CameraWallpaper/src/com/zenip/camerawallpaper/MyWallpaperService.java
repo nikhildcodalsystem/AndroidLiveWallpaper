@@ -98,7 +98,21 @@ public class MyWallpaperService extends WallpaperService {
 			int orientation = resources.getConfiguration().orientation;
 
 			try {
-				mCamera = Camera.open();
+				
+				boolean frontSuccess = false;
+				try{
+					if (Camera.getNumberOfCameras() > 1 && LiveWallpaperSettings.getUseFrontCamera(getApplicationContext())) {
+						mCamera = Camera.open(1);
+						frontSuccess = true;
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+				if (!frontSuccess) {
+					mCamera = Camera.open();
+				}
+				
 				if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 					setDisplayOrientation(mCamera, 90);
 				} else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {

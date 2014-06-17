@@ -4,7 +4,15 @@
     <Button android:id="@+id/Button01" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/recommend_app" />
     <Button android:id="@+id/Button02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/wallpaper_install" 
         android:layout_below="@+id/Button01"/>
-
+    
+    <CheckBox 
+        android:id="@+id/camera2"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:text="@string/camera22"
+        android:layout_below="@+id/Button02" />
+    
+    
+    
     <LinearLayout
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"

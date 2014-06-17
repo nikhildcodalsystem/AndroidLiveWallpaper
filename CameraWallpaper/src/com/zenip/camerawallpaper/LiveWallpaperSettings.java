@@ -12,25 +12,43 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 
 @SuppressLint("NewApi")
-public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickListener{
+public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickListener, OnCheckedChangeListener{
 
 	private InterstitialAd intersitialAd;
 	
 	private StartAppAd startapp = new StartAppAd(this);
+	
+	private CheckBox mCheckBox;
+	
+	private static final String PREF_KEY_FRONT_CAMERA = "front_camera";
+	
+	private boolean mFrontCamera;
+	
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		setUseFrontCamera(this, isChecked);
+	} 
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		StartAppSDK.init(this, "106343400", "206781441");
+//		StartAppSDK.init(this, "DeveloperID", "ApplicationID");
 		StartAppAd.showSplash(this, null);
 		
 		setContentView(R.layout.settings);
@@ -38,6 +56,14 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 		
 		findViewById(R.id.Button01).setOnClickListener(this);
 		findViewById(R.id.Button02).setOnClickListener(this);
+		
+		int cameraCount = Camera.getNumberOfCameras();
+		
+		mCheckBox = (CheckBox) findViewById(R.id.camera2);
+		mCheckBox.setOnCheckedChangeListener(this);
+		if (cameraCount == 1) {
+			mCheckBox.setVisibility(View.GONE);
+		}
 
 		intersitialAd = GoogleAdmob.requestIntersitionAd(this);
 		
@@ -45,17 +71,33 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 		layout.addView(GoogleAdmob.createLayoutWithAd(this));
 		
 		startapp.loadAd();
+		
+		mFrontCamera = getUseFrontCamera(this);
+		mCheckBox.setChecked(mFrontCamera);
+		
+		
+	    
+	}
+	
+	public static SharedPreferences getCameraPref(Context context) {
+		return context.getSharedPreferences("camera_pref", Context.MODE_PRIVATE);
+	}
+	
+	public static void setUseFrontCamera(Context context, boolean useFrontCamera) {
+		getCameraPref(context).edit().putBoolean(PREF_KEY_FRONT_CAMERA, useFrontCamera).commit();
+	}
+	
+	public static boolean getUseFrontCamera(Context context) {
+		return getCameraPref(context).getBoolean(PREF_KEY_FRONT_CAMERA, false);
 	}
 	
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 	};
 	
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		startapp.onPause();
 	}
@@ -109,5 +151,5 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
         }catch(ActivityNotFoundException e){
             e.printStackTrace();
         }
-    } 
+    }
 }
