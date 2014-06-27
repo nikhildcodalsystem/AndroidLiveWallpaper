@@ -7,24 +7,31 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.google.ads.AdRequest;
-import com.google.ads.InterstitialAd;
-import com.google.ads.ac;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdRequest.Builder;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 
 public class GoogleAdmob {
     
-    private static String GOOGLE_AD_ID = "a1520506c5f2244";
-
     public static LinearLayout createLayoutWithAd(Activity activity) {
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
         
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        com.google.ads.AdView goodAdv = new com.google.ads.AdView(activity, com.google.ads.AdSize.BANNER, GOOGLE_AD_ID);
+        AdView goodAdv = new AdView(activity); //, com.google.ads.AdSize.BANNER, GOOGLE_AD_ID
+        if (LiveWallpaperSettings.DEBUG) {
+        	goodAdv.setAdUnitId("");
+		} else {
+			goodAdv.setAdUnitId("ca-app-pub-7879767097814866/4363554030");
+		}
+        goodAdv.setAdSize(AdSize.BANNER);
         layout.addView(goodAdv);
-        goodAdv.loadAd(new AdRequest());
-        
+        AdRequest.Builder builder = new Builder();
+        goodAdv.loadAd(builder.build());
         return layout;
     } 
     
@@ -33,9 +40,15 @@ public class GoogleAdmob {
     	InterstitialAd ad = mFullScreenAdMap.get(activity);
     	if (null == ad) {
     		System.out.println("requestIntersitionAd new create");
-    		ad =  new InterstitialAd(activity, GOOGLE_AD_ID);
+    		ad =  new InterstitialAd(activity);
+    		if (LiveWallpaperSettings.DEBUG) {
+    			ad.setAdUnitId("");
+    		} else {
+    			ad.setAdUnitId("ca-app-pub-7879767097814866/2886820835");
+    		}
+    		
     		mFullScreenAdMap.put(activity, ad);
-        	ad.loadAd(new AdRequest());
+        	ad.loadAd(new Builder().build());
     	} else {
     		System.out.println("requestIntersitionAd from cache");
     	}

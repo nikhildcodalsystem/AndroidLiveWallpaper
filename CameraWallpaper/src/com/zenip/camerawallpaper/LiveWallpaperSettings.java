@@ -1,12 +1,6 @@
 package com.zenip.camerawallpaper;
 
-import com.google.ads.InterstitialAd;
-import com.startapp.android.publish.StartAppAd;
-import com.startapp.android.publish.StartAppSDK;
-import com.zenip.common.UmengBaseActivity;
-
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -24,6 +18,13 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.AdRequest.Builder;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
+import com.zenip.common.UmengBaseActivity;
 @SuppressLint("NewApi")
 public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickListener, OnCheckedChangeListener{
 
@@ -46,9 +47,11 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		StartAppSDK.init(this, "106343400", "206781441");
-//		StartAppSDK.init(this, "DeveloperID", "ApplicationID");
+		if (DEBUG) {
+			StartAppSDK.init(this, "DeveloperID", "ApplicationID");
+		} else  {
+			StartAppSDK.init(this, "106343400", "206781441");
+		}
 		StartAppAd.showSplash(this, null);
 		
 		setContentView(R.layout.settings);
@@ -94,6 +97,7 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 	@Override
 	protected void onResume() {
 		super.onResume();
+		startapp.onResume();
 	};
 	
 	@Override
@@ -104,13 +108,35 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 	
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
-		startapp.onResume();
+	    super.onDestroy();
 	}
 	
 	@Override
 	public void onBackPressed() {
 		startapp.onBackPressed();
+	}
+	
+	public void showIntersitialAd() {
+		if(this.cb.hasCachedInterstitial()) {
+			 // Show an interstitial. This and other interstital/MoreApps cache/show calls should be used after onStart().
+		    this.cb.showInterstitial();
+		}
+		
+//		else if (intersitialAd.isLoaded()) {
+//			intersitialAd.setAdListener(new AdListener() {
+//				@Override
+//				public void onAdOpened() {
+//				}
+//				@Override
+//				public void onAdClosed() {
+//					intersitialAd.setAdListener(this);
+//					intersitialAd.loadAd(new Builder().build());
+//				}
+//			});
+//			intersitialAd.show();
+//		} else {
+//			startapp.onBackPressed();
+//		}
 	}
 	
 	@Override
@@ -135,7 +161,7 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 				startActivityForResult(intent, 0);
 			}
 
-			intersitialAd.show();
+			showIntersitialAd();
 		}
 		
 		else if (R.id.Button01 == v.getId()) {
