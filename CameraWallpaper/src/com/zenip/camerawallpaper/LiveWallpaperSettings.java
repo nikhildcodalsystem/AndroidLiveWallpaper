@@ -28,6 +28,8 @@ import com.zenip.common.UmengBaseActivity;
 @SuppressLint("NewApi")
 public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickListener, OnCheckedChangeListener{
 
+	public static final boolean DEBUG = false;
+	
 	private InterstitialAd intersitialAd;
 	
 	private StartAppAd startapp = new StartAppAd(this);
@@ -117,11 +119,6 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 	}
 	
 	public void showIntersitialAd() {
-		if(this.cb.hasCachedInterstitial()) {
-			 // Show an interstitial. This and other interstital/MoreApps cache/show calls should be used after onStart().
-		    this.cb.showInterstitial();
-		}
-		
 //		else if (intersitialAd.isLoaded()) {
 //			intersitialAd.setAdListener(new AdListener() {
 //				@Override
