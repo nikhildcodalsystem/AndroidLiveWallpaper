@@ -162,7 +162,7 @@ public class LiveWallpaperSettings extends UmengBaseActivity implements OnClickL
 		}
 		
 		else if (R.id.Button01 == v.getId()) {
-			viewAppInMarket(this, "com.zhenby.blink");
+			viewAppInMarket(this, "com.zenip.electricscreen");
 		}
 	}
     

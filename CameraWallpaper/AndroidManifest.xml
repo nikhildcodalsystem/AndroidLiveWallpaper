@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:versionCode="13" android:versionName="3.2.0" package="com.zenip.camerawallpaper"
+<manifest android:versionCode="15" android:versionName="3.3.0" package="com.zenip.camerawallpaper"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
